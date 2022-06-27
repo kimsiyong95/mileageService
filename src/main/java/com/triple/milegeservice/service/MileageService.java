@@ -47,14 +47,13 @@ public class MileageService {
 
         History createHistory = History.createHistory(requestDTO, findUser.getPoint(), point);
 
+        findUser.addPoint(point);
+
         historyRepository.save(createHistory);
 
         return new ResponseDTO().setStatus(HttpStatus.CREATED, saveReview.getReviewId());
     }
 
-    public void addPoint(){
-
-    }
 
     public UserPoint getUser(RequestDTO requestDTO){
         Optional<UserPoint> findUserPoint = userPointRepository.findById(requestDTO.getUserId());

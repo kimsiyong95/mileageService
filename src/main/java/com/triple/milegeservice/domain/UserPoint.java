@@ -26,4 +26,8 @@ public class UserPoint {
                         .point(0).build();
     }
 
+    public void addPoint(int point){
+        this.point += point;
+    }
+
 }

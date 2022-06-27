@@ -24,7 +24,6 @@ public class RequestDTO {
     @Length(max = 36)
     private String reviewId;
 
-    @NotEmpty
     private String content;
 
     private List<String> attachedPhotoIds = new ArrayList<>();

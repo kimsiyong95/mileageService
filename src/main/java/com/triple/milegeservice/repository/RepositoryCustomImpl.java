@@ -37,8 +37,10 @@ public class RepositoryCustomImpl extends QuerydslRepositorySupport implements R
     public Long findPlaceCount(RequestDTO requestDTO) {
         return queryFactory.select(qReview.count())
                     .from(qReview)
-                    .where(eqPlaceId(requestDTO))
-                    .limit(1)
+                    .where(
+                            eqPlaceId(requestDTO),
+                            qReview.deleteYn.eq("N")
+                    )
                     .fetchOne();
     }
 

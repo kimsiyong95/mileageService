@@ -5,7 +5,11 @@ spring:
     url: jdbc:mysql://localhost:3306/mileage?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
     password: 1234
-
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
 
 server:
   error:
