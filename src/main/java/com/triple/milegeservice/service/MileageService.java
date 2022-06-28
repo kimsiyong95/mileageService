@@ -3,11 +3,12 @@ package com.triple.milegeservice.service;
 
 import com.triple.milegeservice.domain.History;
 import com.triple.milegeservice.domain.Photo;
+import com.triple.milegeservice.domain.Review;
 import com.triple.milegeservice.domain.UserPoint;
 import com.triple.milegeservice.domain.common.RequestDTO;
 import com.triple.milegeservice.domain.common.ResponseDTO;
-import com.triple.milegeservice.domain.Review;
 import com.triple.milegeservice.repository.HistoryRepository;
+import com.triple.milegeservice.repository.PhotoRepository;
 import com.triple.milegeservice.repository.ReviewRepository;
 import com.triple.milegeservice.repository.UserPointRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class MileageService {
 
     private final ReviewRepository reviewRepository;
     private final UserPointRepository userPointRepository;
-
+    private final PhotoRepository photoRepository;
     private final HistoryRepository historyRepository;
 
     @Transactional
@@ -39,13 +40,11 @@ public class MileageService {
 
         int point = createPoint(requestDTO);
 
-        List<Photo> photos = Photo.createPhotos(requestDTO);
-
-        Review saveReview = reviewRepository.save(Review.createReview(requestDTO, photos, point));
+        Review saveReview = reviewRepository.save(Review.createReview(requestDTO, point));
 
         UserPoint findUser = getUser(requestDTO);
 
-        History createHistory = History.createHistory(requestDTO, findUser.getPoint(), point);
+        History createHistory = History.createHistory(requestDTO, findUser.getPoint(), point, saveReview);
 
         findUser.addPoint(point);
 
@@ -54,22 +53,88 @@ public class MileageService {
         return new ResponseDTO().setStatus(HttpStatus.CREATED, saveReview.getReviewId());
     }
 
+    @Transactional
+    public ResponseDTO modReview(RequestDTO requestDTO){
+        Optional<Review> findReview = reviewRepository.findByIdAndDeleteYn(requestDTO.getReviewId());
 
-    public UserPoint getUser(RequestDTO requestDTO){
-        Optional<UserPoint> findUserPoint = userPointRepository.findById(requestDTO.getUserId());
-
-        UserPoint userPoint;
-        if(!findUserPoint.isPresent()){
-            return userPointRepository.save(UserPoint.createUserPoint(requestDTO));
+        if(!findReview.isPresent()){
+            throw new IllegalArgumentException(USER_PARAM_ERROR.getMessage());
         }
 
-        return findUserPoint.get();
+        if(!authorizedCheck(findReview.get(),requestDTO.getUserId())){
+            throw new IllegalArgumentException(USER_NOT_ALLOWED.getMessage());
+        }
+
+
+        int originPoint = findReview.get().getPoint();
+
+        int updatePoint = updatePoint(requestDTO, findReview.get().getPhotos());
+
+        photoRepository.deleteByReviewId(requestDTO.getReviewId());
+
+        findReview.get().updateReview(requestDTO, updatePoint);
+
+        if(!findReview.get().pointIncreaseOrDecreaseCheck(originPoint)){
+
+            UserPoint findUser = getUser(requestDTO);
+
+            History createHistory = History.createHistory(requestDTO, findUser.getPoint(), updatePoint, findReview.get());
+
+            findUser.addPoint(updatePoint);
+
+            historyRepository.save(createHistory);
+        }
+
+        return new ResponseDTO().setStatus(HttpStatus.CREATED, findReview.get().getReviewId());
+    }
+
+    @Transactional
+    public ResponseDTO deleteReview(RequestDTO requestDTO){
+        Optional<Review> findReview = reviewRepository.findByIdAndDeleteYn(requestDTO.getReviewId());
+
+        if(!findReview.isPresent()){
+            throw new IllegalArgumentException(USER_PARAM_ERROR.getMessage());
+        }
+
+        if(!authorizedCheck(findReview.get(),requestDTO.getUserId())){
+            throw new IllegalArgumentException(USER_NOT_ALLOWED.getMessage());
+        }
+
+
+        findReview.get().deleteReview();
+
+        if(!findReview.get().pointIncreaseOrDecreaseCheck(0)){
+            int deletePoint = findReview.get().deletePoint();
+
+            UserPoint findUser = getUser(requestDTO);
+
+            History createHistory = History.createHistory(requestDTO, findUser.getPoint(), deletePoint, findReview.get());
+
+            findUser.addPoint(deletePoint);
+
+            historyRepository.save(createHistory);
+
+        }
+
+        return new ResponseDTO().setStatus(HttpStatus.OK, findReview.get().getReviewId());
+    }
+
+    public int updatePoint(RequestDTO requestDTO, List<Photo> photos){
+        int point = 0;
+
+        if(photos.size() > 0 && requestDTO.getAttachedPhotoIds().size() == 0){ // 기존 사진을 삭제한 경우
+            point--;
+        }else if(photos.size() == 0 && requestDTO.getAttachedPhotoIds().size() > 0){ // 사진을 추가한 경우
+            point++;
+        }
+
+        return point;
     }
 
     public int createPoint(RequestDTO requestDTO){
         int totPoint = 0;
 
-        if(reviewRepository.findPlaceCount(requestDTO) == 0){
+        if("ADD".equals(requestDTO.getAction())&&reviewRepository.findPlaceCount(requestDTO) == 0){
             totPoint++;
         }
 
@@ -84,16 +149,20 @@ public class MileageService {
         return totPoint;
     }
 
+    public UserPoint getUser(RequestDTO requestDTO){
+        Optional<UserPoint> findUserPoint = userPointRepository.findById(requestDTO.getUserId());
 
-    @Transactional
-    public ResponseDTO modReview(RequestDTO requestDTO){
-        return new ResponseDTO().setStatus(HttpStatus.OK, "");
+        if(!findUserPoint.isPresent()){
+            return userPointRepository.save(UserPoint.createUserPoint(requestDTO));
+        }
+
+        return findUserPoint.get();
     }
 
-    @Transactional
-    public ResponseDTO deleteReview(RequestDTO requestDTO){
-
-        return new ResponseDTO().setStatus(HttpStatus.OK, "");
+    public boolean authorizedCheck(Review review, String userId){
+        if(review.getUserId().equals(userId))
+            return true;
+        return false;
     }
 
 

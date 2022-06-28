@@ -5,7 +5,9 @@ import lombok.Getter;
 @Getter
 public enum HttpStatusCustom {
     USER_PARAM_ERROR(400, "사용자 파라미터 오류"),
-    DUPLACATE_DATA(400, "중복 데이터 오류");
+    DUPLACATE_DATA(400, "중복 데이터 오류"),
+
+    USER_NOT_ALLOWED(401, "허용하지 않은 사용자");
 
     private int code;
     private String message;

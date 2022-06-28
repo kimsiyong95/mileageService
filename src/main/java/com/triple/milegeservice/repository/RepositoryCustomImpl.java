@@ -28,7 +28,8 @@ public class RepositoryCustomImpl extends QuerydslRepositorySupport implements R
                            .from(qReview)
                            .where(
                                    eqUserId(requestDTO),
-                                   eqPlaceId(requestDTO)
+                                   eqPlaceId(requestDTO),
+                                   qReview.deleteYn.eq("N")
                            )
                            .fetchOne();
     }

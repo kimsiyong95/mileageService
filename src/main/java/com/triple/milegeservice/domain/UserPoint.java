@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "t_review_point")
+@Table(name = "t_user_point")
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

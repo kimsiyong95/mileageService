@@ -23,8 +23,6 @@ public class Photo {
 
     private String photoId;
 
-    private int photoOrder;
-
     @CreationTimestamp
     private LocalDateTime registDt;
 
@@ -32,16 +30,19 @@ public class Photo {
     @JoinColumn(name = "reviewId")
     private Review review;
 
+
+    public void setReview(Review review){
+        this.review = review;
+    }
+
+
     public static List<Photo> createPhotos(RequestDTO requestDTO){
         List<Photo> photos = new ArrayList<>();
-
-        int photoOrderCount = 1;
 
         for(String requestPhotoId : requestDTO.getAttachedPhotoIds()){
             photos.add(
                 Photo.builder().reviewPhotoId(UUID.randomUUID().toString())
                                .photoId(requestPhotoId)
-                               .photoOrder(photoOrderCount++)
                                .build()
             );
         }

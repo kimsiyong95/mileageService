@@ -34,12 +34,14 @@ public class History {
     @CreationTimestamp
     private LocalDateTime registDt;
 
-    public static History createHistory(RequestDTO requestDTO, int existingPoints, int idPoint){
+    public static History createHistory(RequestDTO requestDTO, int existingPoints, int idPoint, Review review){
         return History.builder()
                       .historyId(UUID.randomUUID().toString())
                       .existingPoints(existingPoints)
+                      .review(review)
                       .idPoint(idPoint)
                       .totPoint(existingPoints+idPoint)
+                      .userEvent(requestDTO.getAction())
                       .build();
     }
 }

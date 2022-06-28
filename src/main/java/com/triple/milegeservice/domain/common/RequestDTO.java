@@ -1,6 +1,7 @@
 package com.triple.milegeservice.domain.common;
 
 
+import com.triple.milegeservice.annotation.Type;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -14,6 +15,7 @@ import java.util.List;
 @Setter
 public class RequestDTO {
 
+    @Type
     @NotEmpty
     private String type;
 
