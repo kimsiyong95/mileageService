@@ -21,12 +21,12 @@ EXPLAIN SELECT * FROM t_review
         AND userId = '3e4baf1c-5acb-4efb-a1af-e2dada31b00f';
 ```
 
-<img src="/src/main/resources/static/images/idx1.png" width="400" height="100">
+<img src="/src/main/resources/static/images/idx1.png" width="600" height="100">
 
 ```
 EXPLAIN SELECT COUNT(*) FROM t_review
 		WHERE placeId = '2e4baf1c-5acb-4efb-a1af-eddada31b00f';
 ```
-<img src="/src/main/resources/static/images/idx2.png" width="400" height="100">
+<img src="/src/main/resources/static/images/idx2.png" width="600" height="100">
 
 ### 애플리케이션 실행 방법
