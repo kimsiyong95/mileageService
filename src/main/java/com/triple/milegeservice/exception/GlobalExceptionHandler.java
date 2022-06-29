@@ -1,5 +1,6 @@
 package com.triple.milegeservice.exception;
 
+import com.triple.milegeservice.domain.common.HttpStatusCustom;
 import com.triple.milegeservice.domain.common.ResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -27,10 +28,10 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalStateException.class)
     protected ResponseEntity<ResponseDTO> IllegalStateExceptionHandler(IllegalStateException e) {
-        log.info(HttpStatus.BAD_REQUEST.value() + " : " + e.getMessage());
+        log.info(HttpStatusCustom.USER_NOT_ALLOWED.getCode() + " : " + e.getMessage());
 
         final ResponseDTO errorResponse = ResponseDTO.builder()
-                .code(HttpStatus.BAD_REQUEST.value())
+                .code(HttpStatusCustom.USER_NOT_ALLOWED.getCode())
                 .message(e.getMessage()).build();
 
         return ResponseEntity.badRequest().body(errorResponse);

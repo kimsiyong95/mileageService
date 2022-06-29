@@ -7,9 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -63,6 +61,11 @@ public class MileageRestController {
 
     public ResponseEntity deleteReview(RequestDTO requestDTO){
         return new ResponseEntity(mileageService.deleteReview(requestDTO), HttpStatus.OK);
+    }
+
+    @GetMapping("/points/{userId}")
+    public ResponseEntity getPoints(@PathVariable("userId") String userId){
+        return new ResponseEntity(mileageService.getPoints(userId), HttpStatus.OK);
     }
 
 }

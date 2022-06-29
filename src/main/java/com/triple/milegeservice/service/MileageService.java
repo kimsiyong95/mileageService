@@ -8,7 +8,6 @@ import com.triple.milegeservice.domain.UserPoint;
 import com.triple.milegeservice.domain.common.RequestDTO;
 import com.triple.milegeservice.domain.common.ResponseDTO;
 import com.triple.milegeservice.repository.HistoryRepository;
-import com.triple.milegeservice.repository.PhotoRepository;
 import com.triple.milegeservice.repository.ReviewRepository;
 import com.triple.milegeservice.repository.UserPointRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,6 @@ public class MileageService {
 
     private final ReviewRepository reviewRepository;
     private final UserPointRepository userPointRepository;
-    private final PhotoRepository photoRepository;
     private final HistoryRepository historyRepository;
 
     @Transactional
@@ -35,7 +33,7 @@ public class MileageService {
         Optional<Review> findReview = Optional.ofNullable(reviewRepository.findByUserIdAndPlaceId(requestDTO));
 
         findReview.ifPresent(review->{
-            throw new IllegalStateException(DUPLACATE_DATA.getMessage());
+            throw new IllegalArgumentException(DUPLACATE_DATA.getMessage());
         });
 
         int point = createPoint(requestDTO);
@@ -61,16 +59,12 @@ public class MileageService {
             throw new IllegalArgumentException(USER_PARAM_ERROR.getMessage());
         }
 
-        if(!authorizedCheck(findReview.get(),requestDTO.getUserId())){
-            throw new IllegalArgumentException(USER_NOT_ALLOWED.getMessage());
-        }
+        authorizedCheck(findReview.get(),requestDTO.getUserId());
 
 
         int originPoint = findReview.get().getPoint();
 
         int updatePoint = updatePoint(requestDTO, findReview.get().getPhotos());
-
-        photoRepository.deleteByReviewId(requestDTO.getReviewId());
 
         findReview.get().updateReview(requestDTO, updatePoint);
 
@@ -96,9 +90,8 @@ public class MileageService {
             throw new IllegalArgumentException(USER_PARAM_ERROR.getMessage());
         }
 
-        if(!authorizedCheck(findReview.get(),requestDTO.getUserId())){
-            throw new IllegalArgumentException(USER_NOT_ALLOWED.getMessage());
-        }
+        authorizedCheck(findReview.get(),requestDTO.getUserId());
+
 
 
         findReview.get().deleteReview();
@@ -117,6 +110,17 @@ public class MileageService {
         }
 
         return new ResponseDTO().setStatus(HttpStatus.OK, findReview.get().getReviewId());
+    }
+
+    @Transactional(readOnly = true)
+    public ResponseDTO getPoints(String userId) {
+        Optional<UserPoint> findUser = userPointRepository.findById(userId);
+
+        if(!findUser.isPresent()){
+            throw new IllegalArgumentException(USER_NOT_FOUND.getMessage());
+        }
+
+        return new ResponseDTO().setStatus(HttpStatus.OK, findUser.get().EntityToDto());
     }
 
     public int updatePoint(RequestDTO requestDTO, List<Photo> photos){
@@ -162,8 +166,10 @@ public class MileageService {
     public boolean authorizedCheck(Review review, String userId){
         if(review.getUserId().equals(userId))
             return true;
-        return false;
+
+        throw new IllegalStateException(USER_NOT_ALLOWED.getMessage());
     }
+
 
 
 }

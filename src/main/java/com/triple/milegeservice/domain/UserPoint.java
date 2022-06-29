@@ -26,6 +26,10 @@ public class UserPoint {
                         .point(0).build();
     }
 
+    public UserPointDTO EntityToDto(){
+        return new UserPointDTO(userId,point);
+    }
+
     public void addPoint(int point){
         this.point += point;
     }

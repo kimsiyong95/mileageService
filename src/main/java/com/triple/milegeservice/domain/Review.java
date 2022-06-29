@@ -39,7 +39,7 @@ public class Review {
     private int point;
 
     @Builder.Default
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Photo> photos = new ArrayList<>();
 
     public static Review createReview(RequestDTO requestDTO, int point){
