@@ -1,6 +1,6 @@
 ### API 명세서
 
-<a href="https://docs.google.com/spreadsheets/d/1VujvfRe92PRWMG7oExuMF7W5kx3e7d5dfiA6ZG9LdUU/edit?usp=sharing">API 명세서 바로가기</a>
+<a href="https://docs.google.com/spreadsheets/d/1VujvfRe92PRWMG7oExuMF7W5kx3e7d5dfiA6ZG9LdUU/edit?usp=sharing" target="_blank">API 명세서 바로가기</a>
 
 
 ### ERD
