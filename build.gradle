@@ -62,3 +62,10 @@ configurations {
     }
     querydsl.extendsFrom compileClasspath
 }
+
+
+bootJar {
+    archiveBaseName = 'mileage'
+    archiveFileName = 'mileage.jar'
+    archiveVersion = "0.0.1"
+}
