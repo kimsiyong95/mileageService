@@ -41,13 +41,9 @@ class MileageServiceTest {
     private MileageService mileageService;
 
 
-
-
-
-
     @DisplayName("리뷰등록 및 포인트 부여 로직 테스트")
     @Test
-    public void addReview(){
+    public void addReviewTest(){
         List<String> photos = new ArrayList<>();
         photos.add(UUID.randomUUID().toString());
 
@@ -74,7 +70,7 @@ class MileageServiceTest {
 
     @DisplayName("리뷰 수정 및 포인트 부여 로직 테스트")
     @Test
-    public void modReview(){
+    public void modReviewTest(){
         RequestDTO requestDTO = makeRequestDto("MOD", new ArrayList<>());
 
         List<String> photosId = new ArrayList<>();
@@ -95,6 +91,44 @@ class MileageServiceTest {
         assertThat(responseDTO).isNotNull();
         assertThat(responseDTO.getCode()).isEqualTo(201);
         assertThat(responseDTO.getMessage()).isEqualTo("CREATED");
+    }
+
+    @DisplayName("리뷰 삭제 및 포인트 회수 로직 테스트")
+    @Test
+    public void deleteReviewTest(){
+        RequestDTO requestDTO = makeRequestDto("DELETE", new ArrayList<>());
+
+        Review findReview = Review.createReview(requestDTO, 3);
+        UserPoint userPoint = UserPoint.createUserPoint(requestDTO);
+        History createHistory = History.createHistory(requestDTO, userPoint.getPoint(), 3, findReview);
+
+        when(reviewRepository.findByIdAndDeleteYn(any())).thenReturn(Optional.ofNullable(findReview));
+        when(userPointRepository.findById(any())).thenReturn(Optional.ofNullable(userPoint));
+        when(historyRepository.save(any())).thenReturn(createHistory);
+
+        ResponseDTO responseDTO = mileageService.deleteReview(requestDTO);
+
+        assertThat(responseDTO).isNotNull();
+        assertThat(responseDTO.getCode()).isEqualTo(200);
+        assertThat(responseDTO.getMessage()).isEqualTo("OK");
+    }
+
+    @DisplayName("사용자 포인트 조회 테스트")
+    @Test
+    public void getPoints(){
+        String userId = UUID.randomUUID().toString();
+        RequestDTO requestDTO = new RequestDTO();
+        requestDTO.setUserId(userId);
+
+        UserPoint userPoint = UserPoint.createUserPoint(requestDTO);
+
+        when(userPointRepository.findById(any())).thenReturn(Optional.ofNullable(userPoint));
+
+        ResponseDTO responseDTO = mileageService.getPoints(userId);
+
+        assertThat(responseDTO.getCode()).isEqualTo(200);
+        assertThat(responseDTO.getMessage()).isEqualTo("OK");
+
     }
 
 
