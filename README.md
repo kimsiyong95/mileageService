@@ -32,5 +32,8 @@ EXPLAIN SELECT COUNT(*) FROM t_review
 <img src="/src/main/resources/static/images/idx2.png" width="600" height="100">
 
 ### 애플리케이션 실행 방법
-1-1 : Mysql 3306 포트로 로컬 서비스 올린 후 DDL 문 root 권한으로 실행 
-1-2 : <a href="">jar다운로드</a> 후 window cmd에서 jar 파일 있는 위치에서 java -jar mileage.jar 실행 
+##### 방법1
+1-1 : Mysql 3306 포트로 로컬 서비스 올린 후 DDL 문 root 권한으로 실행 <br>
+1-2 : <a href="">jar다운로드</a> 후 window cmd에서 jar 파일 있는 위치에서 java -jar mileage.jar 실행
+
+##### 방법2
