@@ -38,5 +38,5 @@ EXPLAIN SELECT COUNT(*) FROM t_review
 
 ##### 방법2
 2-1 : code -> Download Zip -> Spring boot 지원하는 개인 Tool로 import <br>
-2-2 : 개인이 사용하는 db 정보 셋팅 후 실행
+2-2 : 개인이 사용하는 db 정보 셋팅 후 DDL문 실행 후 어플리케이션 실행
 <img src="/src/main/resources/static/images/mysql.png" width="600" height="300">
