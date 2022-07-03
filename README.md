@@ -34,9 +34,9 @@ EXPLAIN SELECT COUNT(*) FROM t_review
 ### 애플리케이션 실행 방법
 ##### 방법1
 1-1 : Mysql 3306 포트로 로컬 서비스 올린 후 <a href="/src/main/resources/static/ddl/mileageDDL.sql">DDL 문</a> root 권한으로 실행 <br>
-1-2 : <a href="">jar다운로드</a> 후 window cmd에서 jar 파일 있는 위치에서 java -jar mileage.jar 실행
+1-2 : <a href="/src/main/resources/static/jar/mileage.jar" download="">jar다운로드</a> 후 window cmd에서 jar 파일 있는 위치에서 java -jar mileage.jar 실행
 
 ##### 방법2
 2-1 : code -> Download Zip -> Spring boot 지원하는 개인 Tool로 import <br>
-2-2 : 개인이 사용하는 db 정보 셋팅 후 <a href="/src/main/resources/static/ddl/mileageDDL.sql" download="">DDL 문</a> 실행 후 어플리케이션 실행
+2-2 : 개인이 사용하는 db 정보 셋팅 후 <a href="/src/main/resources/static/ddl/mileageDDL.sql">DDL 문</a> 실행 후 어플리케이션 실행
 <img src="/src/main/resources/static/images/mysql.png" width="600" height="300">
