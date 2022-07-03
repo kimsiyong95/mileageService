@@ -4,7 +4,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.triple.milegeservice.domain.QReview;
 import com.triple.milegeservice.domain.Review;
-import com.triple.milegeservice.domain.common.RequestDTO;
+import com.triple.milegeservice.common.RequestDTO;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;

@@ -1,6 +1,6 @@
 package com.triple.milegeservice.domain;
 
-import com.triple.milegeservice.domain.common.RequestDTO;
+import com.triple.milegeservice.common.RequestDTO;
 import lombok.*;
 
 import javax.persistence.Entity;

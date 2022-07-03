@@ -1,10 +1,9 @@
 package com.triple.milegeservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.triple.milegeservice.domain.Review;
 import com.triple.milegeservice.domain.UserPoint;
-import com.triple.milegeservice.domain.common.RequestDTO;
-import com.triple.milegeservice.domain.common.ResponseDTO;
+import com.triple.milegeservice.common.RequestDTO;
+import com.triple.milegeservice.common.ResponseDTO;
 import com.triple.milegeservice.service.MileageService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

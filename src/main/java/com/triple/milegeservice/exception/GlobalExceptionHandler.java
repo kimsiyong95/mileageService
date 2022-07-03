@@ -1,7 +1,7 @@
 package com.triple.milegeservice.exception;
 
-import com.triple.milegeservice.domain.common.HttpStatusCustom;
-import com.triple.milegeservice.domain.common.ResponseDTO;
+import com.triple.milegeservice.common.HttpStatusCustom;
+import com.triple.milegeservice.common.ResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

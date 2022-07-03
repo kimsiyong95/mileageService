@@ -1,7 +1,7 @@
 package com.triple.milegeservice.domain;
 
 
-import com.triple.milegeservice.domain.common.RequestDTO;
+import com.triple.milegeservice.common.RequestDTO;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

@@ -5,8 +5,8 @@ import com.triple.milegeservice.domain.History;
 import com.triple.milegeservice.domain.Photo;
 import com.triple.milegeservice.domain.Review;
 import com.triple.milegeservice.domain.UserPoint;
-import com.triple.milegeservice.domain.common.RequestDTO;
-import com.triple.milegeservice.domain.common.ResponseDTO;
+import com.triple.milegeservice.common.RequestDTO;
+import com.triple.milegeservice.common.ResponseDTO;
 import com.triple.milegeservice.repository.HistoryRepository;
 import com.triple.milegeservice.repository.ReviewRepository;
 import com.triple.milegeservice.repository.UserPointRepository;
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-import static com.triple.milegeservice.domain.common.HttpStatusCustom.*;
+import static com.triple.milegeservice.common.HttpStatusCustom.*;
 
 @Service
 @RequiredArgsConstructor

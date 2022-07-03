@@ -3,7 +3,7 @@ package com.triple.milegeservice.repository;
 import com.triple.milegeservice.config.QueryDslConfigTest;
 import com.triple.milegeservice.domain.History;
 import com.triple.milegeservice.domain.Review;
-import com.triple.milegeservice.domain.common.RequestDTO;
+import com.triple.milegeservice.common.RequestDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.triple.milegeservice.domain.common;
+package com.triple.milegeservice.common;
 
 import lombok.Getter;
 

@@ -1,6 +1,6 @@
 package com.triple.milegeservice.controller;
 
-import com.triple.milegeservice.domain.common.RequestDTO;
+import com.triple.milegeservice.common.RequestDTO;
 import com.triple.milegeservice.service.MileageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import static com.triple.milegeservice.domain.common.HttpStatusCustom.*;
+import static com.triple.milegeservice.common.HttpStatusCustom.*;
 
 @RestController
 @RequiredArgsConstructor

@@ -1,7 +1,7 @@
 package com.triple.milegeservice.repository;
 
 import com.triple.milegeservice.domain.Review;
-import com.triple.milegeservice.domain.common.RequestDTO;
+import com.triple.milegeservice.common.RequestDTO;
 
 public interface RepositoryCustom {
     public Review findByUserIdAndPlaceId(RequestDTO requestDTO);
